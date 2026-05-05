@@ -78,79 +78,43 @@ const ProgramCard = ({ title, desc, delay, onContact }) => (
   </motion.div>
 );
 
-// --- Sección de Contacto con Formulario ---
+// --- Sección de Contacto por WhatsApp ---
 
-const ContactSection = () => {
-  const [form, setForm] = useState({ nombre: '', telefono: '', email: '', comentario: '' });
+const WA_LINK = "https://wa.me/59898403819?text=Hola%20Maxi%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20tus%20programas.";
 
-  const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(`Consulta de ${form.nombre}`);
-    const body = encodeURIComponent(
-      `Nombre: ${form.nombre}\nTeléfono: ${form.telefono}\nEmail: ${form.email}\n\nComentario:\n${form.comentario}`
-    );
-    const link = document.createElement('a');
-    link.href = `mailto:maxiigoomez1995@gmail.com?subject=${subject}&body=${body}`;
-    link.click();
-    setForm({ nombre: '', telefono: '', email: '', comentario: '' });
-  };
-
-  return (
-    <EditorialSection id="contacto">
-      <div className="container mx-auto px-4 max-w-lg w-full">
-        <div className="text-center mb-16">
-          <span className="text-zinc-600 text-[10px] font-bold uppercase tracking-[0.5em] mb-8 block">03 / Contacto</span>
-          <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none italic uppercase">
-            HABLEMOS.
-          </h2>
-        </div>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-          {[
-            { label: 'Nombre', name: 'nombre', type: 'text', placeholder: 'Tu nombre completo' },
-            { label: 'Teléfono', name: 'telefono', type: 'tel', placeholder: '+598 99 000 000' },
-            { label: 'Email', name: 'email', type: 'email', placeholder: 'tu@email.com' },
-          ].map(({ label, name, type, placeholder }) => (
-            <div key={name} className="flex flex-col gap-2 border-b border-zinc-800 pb-4">
-              <label htmlFor={name} className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">{label}</label>
-              <input
-                id={name}
-                type={type}
-                name={name}
-                value={form[name]}
-                onChange={handleChange}
-                required
-                placeholder={placeholder}
-                className="bg-transparent text-zinc-200 text-sm outline-none placeholder-zinc-700 py-1"
-              />
-            </div>
-          ))}
-          <div className="flex flex-col gap-2 border-b border-zinc-800 pb-4">
-            <label htmlFor="comentario" className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Comentario</label>
-            <textarea
-              id="comentario"
-              name="comentario"
-              value={form.comentario}
-              onChange={handleChange}
-              rows={4}
-              required
-              placeholder="¿En qué puedo ayudarte?"
-              className="bg-transparent text-zinc-200 text-sm outline-none placeholder-zinc-700 py-1 resize-none"
-            />
-          </div>
-          <motion.button
-            type="submit"
-            whileHover={{ scale: 1.02 }}
-            className="mt-4 px-12 py-5 border border-zinc-800 text-[10px] font-bold uppercase tracking-[0.5em] hover:bg-white hover:text-black w-full"
-          >
-            Enviar Mensaje
-          </motion.button>
-        </form>
+const ContactSection = () => (
+  <EditorialSection id="contacto">
+    <div className="container mx-auto px-4 max-w-lg w-full text-center flex flex-col items-center gap-16">
+      <div>
+        <span className="text-zinc-600 text-[10px] font-bold uppercase tracking-[0.5em] mb-8 block">03 / Contacto</span>
+        <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none italic uppercase">
+          HABLEMOS.
+        </h2>
       </div>
-    </EditorialSection>
-  );
-};
+
+      <div className="flex flex-col items-center gap-6 border-t border-zinc-900 pt-16 w-full">
+        <p className="text-zinc-400 text-sm md:text-base font-light leading-relaxed italic max-w-sm">
+          "Un mensaje es el primer paso. El resto lo construimos juntos."
+        </p>
+        <p className="text-zinc-600 text-[10px] uppercase tracking-[0.4em]">
+          Respondo en menos de 24 hs — Paysandú, Uruguay
+        </p>
+      </div>
+
+      <motion.a
+        href={WA_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+        className="flex items-center gap-4 px-12 py-5 border border-zinc-800 text-[10px] font-bold uppercase tracking-[0.5em] hover:bg-white hover:text-black transition-all duration-500 w-full justify-center"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Escribir por WhatsApp
+      </motion.a>
+    </div>
+  </EditorialSection>
+);
 
 export default function App() {
   const { scrollYProgress } = useScroll();
@@ -327,25 +291,33 @@ export default function App() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-20 lg:gap-12 w-full max-w-6xl">
-            <ProgramCard
-              title="Mentoria VIP"
-              desc="Acompañamiento personal de alta frecuencia. Programación, nutrición y mindset sin fisuras."
-              delay={0.1}
-              onContact={() => scrollTo('contacto')}
-            />
-            <ProgramCard
-              title="Protocolo Alpha"
-              desc="El núcleo de mi metodología híbrida. 12 semanas para redefinir tus límites físicos."
-              delay={0.2}
-              onContact={() => scrollTo('contacto')}
-            />
-            <ProgramCard
-              title="Legacy Plan"
-              desc="Enfoque 100% estético. Esculpiendo la versión más imponente de tu historia."
-              delay={0.3}
-              onContact={() => scrollTo('contacto')}
-            />
+          <div className="flex flex-col items-center gap-20 w-full">
+            <div className="w-full max-w-sm mx-auto">
+              <ProgramCard
+                title="Asesoría Online"
+                desc="Programación personalizada enfocada en hipertrofia. Entrenamiento diseñado para tu cuerpo, tu nivel y tus objetivos — con seguimiento continuo y ajustes semanales."
+                delay={0.1}
+                onContact={() => scrollTo('contacto')}
+              />
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-col items-center gap-4 border-t border-zinc-900 pt-12 max-w-sm w-full mx-auto text-center"
+            >
+              <span className="text-[9px] font-bold uppercase tracking-[0.6em] text-zinc-700">Próximamente</span>
+              <p className="text-zinc-600 text-xs uppercase tracking-[0.3em]">
+                Nuevos sistemas en desarrollo — se vienen más formas de trabajar juntos.
+              </p>
+              <div className="flex gap-3 mt-2">
+                {[1, 2, 3].map(i => (
+                  <span key={i} className="w-1.5 h-1.5 rounded-full bg-zinc-800 animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
